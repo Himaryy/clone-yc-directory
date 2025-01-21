@@ -1,5 +1,7 @@
 import SearchForm from "@/components/SearchForm";
-import StartupCard from "@/components/StartupCard";
+import StartupCard, { StartupCardType } from "@/components/StartupCard";
+import { STARTUPS_QUERY } from "@/lib/queries";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 
 export default async function Home({
   searchParams,
@@ -8,19 +10,9 @@ export default async function Home({
 }) {
   const query = (await searchParams).query;
 
-  const posts = [
-    {
-      _id: 1,
-      _createdAt: new Date(),
-      views: 55,
-      author: { _id: 1, name: "hafied" },
-      description: "This is Description",
-      image:
-        "https://media.istockphoto.com/id/2007060977/id/foto/pegang-tablet-untuk-memeriksa-inspeksi-dan-dokumen-persetujuan-manajemen-kontrak-dan-memeriksa.jpg?s=1024x1024&w=is&k=20&c=-HkdxDVS4UT0rzW_ykLNmGziIxZ3kWmRw-R3txdAoSI=",
-      category: "AI",
-      title: "Lead Future With AI",
-    },
-  ];
+  const params = { search: query || null };
+
+  const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params });
 
   return (
     <>
@@ -53,6 +45,8 @@ export default async function Home({
           )}
         </ul>
       </section>
+
+      <SanityLive />
     </>
   );
 }
