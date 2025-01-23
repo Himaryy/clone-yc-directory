@@ -30,3 +30,21 @@ export const STARTUPS_BY_ID_QUERY =
   category,
   pitch,
 }`);
+
+export const STARTUPS_VIEWS_QUERY =
+  defineQuery(`*[_type == 'startup' && _id == $id][0]{
+  _id,
+  views
+  }`);
+
+export const AUTHOR_BY_GITHUB_QUERY = defineQuery(`
+  *[_type == 'author' && id == $id][0]{
+      _id,
+      id,
+      name,
+      username,
+      email,
+      image,
+      bio
+  }
+`);
